@@ -47,6 +47,8 @@ def login_form(
     url: Optional[str] = None,
     apiKey: Optional[str] = None,
     providers: Optional[List[str]] = None,
+    redirectTo: Optional[str] = None,
+    onlyThirdPartyProviders: Optional[bool] = None,
 ) -> Mapping[str, Any]:
     """Creates a new instance of `login` component using supabase-js.
 
@@ -67,6 +69,8 @@ def login_form(
         apiKey=apiKey or os.environ["SUPABASE_KEY"],
         providers=providers or [],
         key="login",
+        redirectTo=redirectTo or None,
+        onlyThirdPartyProviders=onlyThirdPartyProviders or False,
     )
     # Modify the value returned so that it can be used as default selections.
     return session

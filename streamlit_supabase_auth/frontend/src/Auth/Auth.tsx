@@ -219,6 +219,8 @@ function SocialAuth({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState("");
 
+  console.log({ redirectTo });
+
   const handleProviderSignIn = async (provider: Provider) => {
     setLoading(true);
     try {

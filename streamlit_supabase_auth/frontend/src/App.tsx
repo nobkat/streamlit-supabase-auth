@@ -99,8 +99,11 @@ const Container = (props: {
   type: "login" | "logout";
   supabase: SupabaseClient;
   providers: Provider[];
+  redirectTo?: string;
+  onlyThirdPartyProviders?: boolean;
 }) => {
-  const { type, supabase, providers } = props;
+  const { type, supabase, providers, redirectTo, onlyThirdPartyProviders } =
+    props;
 
   // Update iframe height when user context changes
   useEffect(() => Streamlit.setFrameHeight());
@@ -112,6 +115,8 @@ const Container = (props: {
         providers={providers}
         supabaseClient={supabase}
         onError={() => Streamlit.setFrameHeight()}
+        redirectTo={redirectTo}
+        onlyThirdPartyProviders={onlyThirdPartyProviders}
       />
     );
   }
@@ -128,7 +133,8 @@ const Container = (props: {
 };
 
 const App = (props: ComponentProps) => {
-  const { url, apiKey, providers, key } = props.args;
+  const { url, apiKey, providers, key, redirectTo, onlyThirdPartyProviders } =
+    props.args;
 
   // Initialise supabase client once
   const [supabase, setSupabase] = useState<SupabaseClient>(() =>
@@ -154,7 +160,13 @@ const App = (props: ComponentProps) => {
 
   return (
     <Auth.UserContextProvider supabaseClient={supabase}>
-      <Container type={key} supabase={supabase} providers={providers} />
+      <Container
+        type={key}
+        supabase={supabase}
+        providers={providers}
+        redirectTo={redirectTo}
+        onlyThirdPartyProviders={onlyThirdPartyProviders}
+      />
     </Auth.UserContextProvider>
   );
 };
